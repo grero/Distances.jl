@@ -119,26 +119,34 @@ Q = Q * Q'  # make sure Q is positive-definite
 px = x ./ sum(x)
 py = y ./ sum(y)
 expected_bc_x_y = sum(sqrt(px .* py))
+expected_cs_x_y = sum(px.*py)^2/(sum(px.*px)*sum(py.*py))
 @test_approx_eq_eps Distances.bhattacharyya_coeff(x, y) expected_bc_x_y 1.0e-12
 @test_approx_eq_eps bhattacharyya(x, y) (-log(expected_bc_x_y)) 1.0e-12
 @test_approx_eq_eps hellinger(x, y) sqrt(1 - expected_bc_x_y) 1.0e-12
 
+@test_approx_eq_eps cauchyschwartz(x,y) -log(expected_cs_x_y) 1.0e-12
+
 pa = a ./ sum(a)
 pb = b ./ sum(b)
 expected_bc_a_b = sum(sqrt(pa .* pb))
+expected_cs_x_y = sum(px.*py)^2/(sum(px.*px)*sum(py.*py))
 @test_approx_eq_eps Distances.bhattacharyya_coeff(a, b) expected_bc_a_b 1.0e-12
 @test_approx_eq_eps bhattacharyya(a, b) (-log(expected_bc_a_b)) 1.0e-12
 @test_approx_eq_eps hellinger(a, b) sqrt(1 - expected_bc_a_b) 1.0e-12
+@test_approx_eq_eps cauchyschwartz(x,y) -log(expected_cs_x_y) 1.0e-12
 
 pp = p ./ sum(p)
 pq = q ./ sum(q)
 expected_bc_p_q = sum(sqrt(pp .* pq))
+expected_cs_x_y = sum(px.*py)^2/(sum(px.*px)*sum(py.*py))
 @test_approx_eq_eps Distances.bhattacharyya_coeff(p, q) expected_bc_p_q 1.0e-12
 @test_approx_eq_eps bhattacharyya(p, q) (-log(expected_bc_p_q)) 1.0e-12
 @test_approx_eq_eps hellinger(p, q) sqrt(1 - expected_bc_p_q) 1.0e-12
+@test_approx_eq_eps cauchyschwartz(x,y) -log(expected_cs_x_y) 1.0e-12
 
 # Ensure it is semimetric
 @test_approx_eq_eps bhattacharyya(x, y) bhattacharyya(y, x) 1.0e-12
+@test_approx_eq_eps cauchyschwartz(x,y) cauchyschwartz(y,x) 1.e-12
 
 
 # test column-wise metrics

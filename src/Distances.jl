@@ -40,6 +40,7 @@ export
     Mahalanobis,
     BhattacharyyaDist,
     HellingerDist,
+	CauchySchwartzDist,
 
     # convenient functions
     euclidean,
@@ -65,7 +66,8 @@ export
     sqmahalanobis,
     mahalanobis,
     bhattacharyya,
-    hellinger
+    hellinger,
+	cauchyschwartz
 
 include("common.jl")
 include("generic.jl")
@@ -73,6 +75,7 @@ include("metrics.jl")
 include("wmetrics.jl")
 include("mahalanobis.jl")
 include("bhattacharyya.jl")
+include("cauchyschwartz.jl")
 
 end # module end
 
